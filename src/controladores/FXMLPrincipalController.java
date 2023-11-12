@@ -14,7 +14,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -23,7 +22,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Stage;
 import javafxmlapplication.JavaFXMLApplication;
 import model.Club;
 import model.ClubDAOException;
@@ -52,9 +50,9 @@ public class FXMLPrincipalController implements Initializable {
     @FXML
     private Label mensajeError;
     @FXML
-    private BorderPane borderPanePrincipal;
-    @FXML
     private Button Iniciar;
+    @FXML
+    private BorderPane borderPanePrincipal;
     
     public FXMLPrincipalController() throws ClubDAOException, IOException {
         this.club = Club.getInstance();
