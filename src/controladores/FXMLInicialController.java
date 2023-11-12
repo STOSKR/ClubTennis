@@ -2,61 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
  */
-package controladores;
-
-import java.io.IOException;
-import java.net.URL;
-import java.util.Optional;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.DialogPane;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.stage.WindowEvent;
-import javafxmlapplication.JavaFXMLApplication;
-import model.Club;
-import model.ClubDAOException;
-import model.Member;
-/**
- * FXML Controller class
- *
- * @author ziadf
- */
-public class FXMLInicialController implements Initializable {
-
-    @FXML
-    private Label nicknameUsuario;
-    @FXML
-    private ImageView imagenUsuario;
-
-    Club club;
-    Member member1;
-    Member member2;
-    
-    String nick;
-    private static Member member;
-    @FXML
-    private Label nicknameUsuario11;
-    @FXML
-    private Label nicknameUsuario1;
-
-    public FXMLInicialController() throws ClubDAOException, IOException {
-        this.club = Club.getInstance();
-        
-    }
-    
-    
 
     /**
      * Initializes the controller class.
