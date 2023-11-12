@@ -8,14 +8,11 @@ import javafx.scene.image.Image;
 import java.io.IOException;
 import javafxmlapplication.JavaFXMLApplication;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,13 +20,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -89,8 +83,7 @@ public class FXMLRegisterController implements Initializable {
     private BooleanProperty equalPasswords; 
     private BooleanProperty validTarjeta;
     private BooleanProperty validCSV;
-     private BooleanProperty validnickName;
-   
+    private BooleanProperty validnickName;
     @FXML
     private Label IncorrectNickname;
     @FXML
@@ -99,7 +92,6 @@ public class FXMLRegisterController implements Initializable {
     private Label lIncorrectPass1;
     @FXML
     private Label IncorrectTarjeta;
-    
     @FXML
     private Label IncorrectNombre;
     @FXML
@@ -111,7 +103,6 @@ public class FXMLRegisterController implements Initializable {
     private ImageView imagen;
     @FXML
     private Label IncorrectoCSV;
-  
     @FXML
     private Button quitarImagen;
     private BooleanBinding camposVacios;
@@ -122,11 +113,9 @@ public class FXMLRegisterController implements Initializable {
     private Label nicknameUsuario;
     @FXML
     private ImageView imagenUsuario;
-  
-
+    
     public FXMLRegisterController() throws ClubDAOException, IOException {
         this.club = Club.getInstance();
-     //   club.setInitialData();
     }
     
     /**
@@ -134,10 +123,11 @@ public class FXMLRegisterController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        // Poner el imagen por defecto
         def = new Image("/Iconos/avatars/default.png");
-          imagen.setImage(def);    
+        imagen.setImage(def);    
         
+        // Crear y asignar valores de propiedades booleanas para comprobar
         validPassword = new SimpleBooleanProperty();   
         equalPasswords = new SimpleBooleanProperty();
         validTarjeta = new SimpleBooleanProperty();
@@ -155,45 +145,50 @@ public class FXMLRegisterController implements Initializable {
         validApellidos.setValue(Boolean.FALSE);
         validTelefono.setValue(Boolean.FALSE);
         validnickName.setValue(Boolean.FALSE);
+        
         if(tarjeta_text.getText().equals("")){
             validTarjeta.setValue(Boolean.TRUE); 
         }
-         if(csv_text.getText().equals("")){
+        
+        if(csv_text.getText().equals("")){
             validCSV.setValue(Boolean.TRUE); 
         }
-       contraseña_text.focusedProperty().addListener((observable, oldValue,newValue)->{
+        
+        contraseña_text.focusedProperty().addListener((observable, oldValue,newValue)->{
             if(!newValue){ //focus lost.
                 checkEditPassword();
             }
         });
-      nombre_text.focusedProperty().addListener((observable, oldValue,newValue)->{
+        
+        nombre_text.focusedProperty().addListener((observable, oldValue,newValue)->{
             if(!newValue){ //focus lost.
                 checkEditNombre();
             }
-          });
+        });
   
         rcontraseña_text.focusedProperty().addListener((observable, oldValue,newValue)->{
             if(!newValue){ //focus lost.
                 checkEditPassword1();
             }
-         });
+        });
+        
         tarjeta_text.focusedProperty().addListener((observable, oldValue,newValue)->{
             if(!newValue){ //focus lost.
                 checkEditTarjeta();
             }
-         });
+        });
+        
         csv_text.focusedProperty().addListener((observable, oldValue,newValue)->{
             if(!newValue){ //focus lost.
                 checkEditCSV();
             }
-         });
-       
-         
+        });
+        
         apellidos_text.focusedProperty().addListener((observable, oldValue,newValue)->{
             if(!newValue){ //focus lost.
                 checkEditApellidos();
             }
-         });
+        });
         telefono_text.focusedProperty().addListener((observable, oldValue,newValue)->{
             if(!newValue){ //focus lost.
                 checkEditTelefono();
@@ -203,117 +198,79 @@ public class FXMLRegisterController implements Initializable {
             if(!newValue){ //focus lost.
                 checkEditnickName();
             }
-         });
-       
-         BooleanBinding validFields = Bindings.and(validNombre, validPassword).and(equalPasswords).and(validApellidos).and(validTelefono).and(validnickName);
-
-  /*
-         BooleanBinding campoPass =Bindings.createBooleanBinding(() ->
-               contraseña_text.getText().isEmpty(),
-            contraseña_text.textProperty()
-    );    
+        });
+        
+        // Comprueba si todos los campos son válidos
+        BooleanBinding validFields = Bindings.and(validNombre, validPassword).and(equalPasswords).and(validApellidos).and(validTelefono).and(validnickName);
+        
+        BooleanBinding campoCSV = Bindings.createBooleanBinding(() ->
+               tarjeta_text.getText().isEmpty(),tarjeta_text.textProperty()
+        );
+        
+        // Desavilita cvs_text si el texto de la tarjeta está vacía
+        csv_text.disableProperty().bind(campoCSV);
          
-         rcontraseña_text.disableProperty().bind(campoPass);
-         */
-         BooleanBinding campoCSV =Bindings.createBooleanBinding(() ->
-               tarjeta_text.getText().isEmpty(),
-            tarjeta_text.textProperty()
-    );
-         csv_text.disableProperty().bind(campoCSV);
-         
-   camposVacios = Bindings.createBooleanBinding(() ->
-            nombre_text.getText().isEmpty() ||
-            apellidos_text.getText().isEmpty() ||
-            telefono_text.getText().isEmpty() ||
-            nickname_text.getText().isEmpty() ||
-            contraseña_text.getText().isEmpty() ||
-            rcontraseña_text.getText().isEmpty(),
-            nombre_text.textProperty(),
-            apellidos_text.textProperty(),
-            telefono_text.textProperty(),
-            nickname_text.textProperty(),
-            contraseña_text.textProperty(),
-            rcontraseña_text.textProperty()
-    );
-
-  
-      
-//       BooleanBinding todosCompletos = camposVacios.not().and(validFields.not());
-      // button_aceptar.disableProperty().bind(todosCompletos.not().or(validFields));
-               button_aceptar.disableProperty().bind(camposVacios) ;
-    quitarImagen.setVisible(false);
-     if(imagen.getImage()==def){
-            quitarImagen.setVisible(false);
-            
-        }else{
-            quitarImagen.setVisible(true);
-     }
+        camposVacios = Bindings.createBooleanBinding(() ->
+            nombre_text.getText().isEmpty() || apellidos_text.getText().isEmpty() || telefono_text.getText().isEmpty() ||
+            nickname_text.getText().isEmpty() || contraseña_text.getText().isEmpty() || rcontraseña_text.getText().isEmpty(),
+            nombre_text.textProperty(), apellidos_text.textProperty(), telefono_text.textProperty(), 
+            nickname_text.textProperty(), contraseña_text.textProperty(), rcontraseña_text.textProperty()
+        );
+        
+        // Si algún campo está vacío, deshabilitar el botón de aceptar
+        button_aceptar.disableProperty().bind(camposVacios) ;
+        quitarImagen.setVisible(false);
+            if(imagen.getImage()==def){
+                quitarImagen.setVisible(false);
+            } else{
+                quitarImagen.setVisible(true);
+        }  
+    }
     
-}
-        private boolean validNombre() {
-        // Comprobar si el nombre es válido
+    private boolean validNombre() {
         return validNombre.get();
     }
-        private boolean validApellidos() {
-        // Comprobar si los apellidos son válidos
+    private boolean validApellidos() {
         return validApellidos.get();
     }
-
     private boolean validTelefono() {
-        // Comprobar si el teléfono es válido
-        // ...
         return validTelefono.get();
     }
-
     private boolean validnickName() {
-        // Comprobar si el nickname es válido
-        // ...
         return validnickName.get();
     }
-
     private boolean validPassword() {
-        // Comprobar si la contraseña es válida
-        // ...
         return validPassword.get();
     }
-
     private boolean equalPasswords() {
-        // Comprobar si las contraseñas son iguales
-        // ...
         return equalPasswords.get();
     }
-         private boolean validTarjeta() {
-        // Comprobar si el nombre es válido
+    private boolean validTarjeta() { 
         return validTarjeta.get();
-    }  private boolean validcsv() {
-        // Comprobar si el nombre es válido
+    }
+    private boolean validcsv() {
         return validCSV.get();
     }
-   
-    private void checkEditPassword(){
-     if(contraseña_text.getLength()>0){
-        if(contraseña_text.textProperty().getValueSafe().length()<6)
-         //Incorrect Password
-         manageError(lIncorrectPass, contraseña_text, validPassword);
-     else
-         manageCorrect(lIncorrectPass, contraseña_text, validPassword);
-    }
-    if(contraseña_text.getLength()==0){
-      manageCorrect2(lIncorrectPass, contraseña_text, validPassword);
-     }
-    if(rcontraseña_text.getLength()!=0){
-       
-      if(!(contraseña_text.textProperty().getValueSafe().equals( rcontraseña_text.textProperty().getValueSafe()) )){
-                showErrorMessage(lIncorrectPass1,rcontraseña_text);
-                equalPasswords.setValue(Boolean.FALSE);
-              //  contraseña_text.textProperty().setValue("");
-             //  rcontraseña_text.textProperty().setValue("");
-                //contraseña_text.requestFocus();
-                }else
-             
-                 manageCorrect(lIncorrectPass1,rcontraseña_text,equalPasswords);
-             }
     
+    private void checkEditPassword(){
+        if(contraseña_text.getLength()==0){
+          manageCorrect2(lIncorrectPass, contraseña_text, validPassword);
+        }
+
+        // Si la contraseña tiene menos de seis caracteres
+        if(contraseña_text.textProperty().getValueSafe().length()<6){
+            manageError(lIncorrectPass, contraseña_text, validPassword);
+        } else{
+            manageCorrect(lIncorrectPass, contraseña_text, validPassword);
+        }
+        
+        // Si las contraseñas no son iguales
+        if(!(contraseña_text.textProperty().getValueSafe().equals( rcontraseña_text.textProperty().getValueSafe()) )){
+            showErrorMessage(lIncorrectPass1,rcontraseña_text);
+            equalPasswords.setValue(Boolean.FALSE);
+        } else{
+            manageCorrect(lIncorrectPass1,rcontraseña_text,equalPasswords);
+        }
     }
     
      private void checkEditnickName(){
