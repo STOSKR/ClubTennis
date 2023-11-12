@@ -4,20 +4,15 @@
  */
 package controladores;
 
-import controladores.FXMLRegisterController;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
-import javafx.beans.property.BooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -25,11 +20,11 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafxmlapplication.JavaFXMLApplication;
-import model.Booking;
 import model.Club;
 import model.ClubDAOException;
 import model.Member;
@@ -44,15 +39,8 @@ public class FXMLPrincipalController implements Initializable {
     /**
      * Initializes the controller class.
      */
-         
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
     Club club;
-    Member member;
     Member check;
-    String s;
-    Boolean botonPulsado;
     @FXML
     private TextField nickname_text;
     @FXML
@@ -62,99 +50,92 @@ public class FXMLPrincipalController implements Initializable {
     @FXML
     private CheckBox mostrarContraseña;
     @FXML
-    private Button Autenticarse;
-    @FXML
     private Label mensajeError;
     @FXML
     private BorderPane borderPanePrincipal;
+    @FXML
+    private Button Iniciar;
     
     public FXMLPrincipalController() throws ClubDAOException, IOException {
         this.club = Club.getInstance();
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //Codigo iniciar sesion
-        //nickname_text.setText("edu11");
-        //contraseña_text.setText("123456");
+        // Codigo iniciar sesion (Pruebas)
+        // nickname_text.setText("edu11");
+        // contraseña_text.setText("123456");
         
-        BooleanBinding booleanBind = Bindings.and(nickname_text.textProperty().isEmpty(),contraseña_text.textProperty().isEmpty());
-           Autenticarse.disableProperty().bind(booleanBind);
-        // final codigo iniciar sesion
+        BooleanBinding booleanBind = Bindings.or(nickname_text.textProperty().isEmpty(),contraseña_text.textProperty().isEmpty());
+        Iniciar.disableProperty().bind(booleanBind);
+        contraseña_textMostrada.setDisable(true);
+        // Final código iniciar sesión
     }    
-
+    
     @FXML
-    private void Autenticarse(ActionEvent event) throws IOException {
-          
-            if(contraseña_text.getText().equals("")){
-         check = club.getMemberByCredentials(nickname_text.getText(), contraseña_textMostrada.getText());   
-            }else{
-         check = club.getMemberByCredentials(nickname_text.getText(), contraseña_text.getText());   
- 
-            }
-           JavaFXMLApplication.setMember(check);
-           
-         if(!(check==null)){
-        FXMLLoader loader = new  FXMLLoader(getClass().getResource("/vista/FXMLInicial.fxml"));
-        Parent root = loader.load();
-        JavaFXMLApplication.setRoot(root);   
-        //JavaFXMLApplication.setMember(check);
-        contraseña_text.setText("");
-        nickname_text.setText("");
+    private void Iniciar(ActionEvent event) throws IOException {
+        if(contraseña_text.getText().equals("")){
+            check = club.getMemberByCredentials(nickname_text.getText(), contraseña_textMostrada.getText());   
+        }else{
+            check = club.getMemberByCredentials(nickname_text.getText(), contraseña_text.getText());   
+        }
+        
+        JavaFXMLApplication.setMember(check);
+        
+        if(!(check==null)){
+            FXMLLoader loader = new  FXMLLoader(getClass().getResource("/vista/FXMLInicial.fxml"));
+            Parent root = loader.load();
+            JavaFXMLApplication.setRoot(root);   
+            //JavaFXMLApplication.setMember(check);
+            contraseña_text.setText("");
+            nickname_text.setText("");
         }else if(club.existsLogin(nickname_text.getText())){
-               contraseña_text.setText("");
-               contraseña_textMostrada.setText("");
-               mensajeError.setText("Contraseña Incorrecta"); 
-               mensajeError.visibleProperty().set(true);
-   
+            contraseña_text.setText("");
+            contraseña_textMostrada.setText("");
+            mensajeError.setText("Contraseña Incorrecta"); 
+            mensajeError.visibleProperty().set(true);
        }else{
-             mensajeError.setText("Usuario No Registrado"); 
-             mensajeError.visibleProperty().set(true);
-             contraseña_text.setText("");
-             nickname_text.setText(""); 
-             contraseña_textMostrada.setText("");
+            mensajeError.setText("Usuario No Registrado"); 
+            mensajeError.visibleProperty().set(true);
+            nickname_text.setText(""); 
+            contraseña_text.setText("");
+            contraseña_textMostrada.setText("");
             }   
     }
     
-
     @FXML
     private void Registrarse(ActionEvent event)throws IOException, ClubDAOException {
-     FXMLLoader loader = new  FXMLLoader(getClass().getResource("/vista/FXMLRegister.fxml"));
-        Parent root = loader.load();
-        JavaFXMLApplication.setRoot(root);
-      
-
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/vista/FXMLRegister.fxml"));
+        JavaFXMLApplication.setRoot(loader.load());
     }
 
     @FXML
     private void Pistas_Disponibles(ActionEvent event) throws IOException {
         FXMLLoader loader = new  FXMLLoader(getClass().getResource("/vista/FXMLReservar.fxml"));
-        Parent root = loader.load();
-        JavaFXMLApplication.setRoot(root);
+        JavaFXMLApplication.setRoot(loader.load());
     }
 
     @FXML
     private void MostrarContraseña(ActionEvent event) {
         if(mostrarContraseña.isSelected()){
-            contraseña_textMostrada.setText(contraseña_text.getText());
+            contraseña_textMostrada.setDisable(false);
             contraseña_textMostrada.setVisible(true);
+            contraseña_textMostrada.setText(contraseña_text.getText());
             contraseña_text.setVisible(false);
+            contraseña_text.setDisable(true);
         } else{
+            contraseña_text.setDisable(false);
+            contraseña_text.setVisible(true);
             contraseña_text.setText(contraseña_textMostrada.getText());
+            contraseña_textMostrada.setDisable(true);
             contraseña_textMostrada.setVisible(false);
-            contraseña_text.setVisible(true);     
         }
     }
-    
-   
-   
-    /*@FXML
-    private void Cancelar(ActionEvent event) throws IOException {
-        FXMLLoader loader= new  FXMLLoader(getClass().getResource("/vista/FXMLPrincipal.fxml"));
-        Parent root = loader.load();
-        JavaFXMLApplication.setRoot(root);
-        mensajeError.visibleProperty().set(false);
-        contraseña_text.setText("");
-        nickname_text.setText(""); 
+
+    @FXML
+    private void Iniciark(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            Iniciar.fire();
+        }
     }
-    */
+
 }
