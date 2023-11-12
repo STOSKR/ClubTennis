@@ -1,0 +1,183 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 28 may 2023, 11:49:53
+    Author     : ustar
+*/
+
+
+.root {
+    -fx-background-image: url("fondo.jpg");
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-width: 100%;
+
+    -fx-base: #4CAF50;
+    -fx-default-button: #7f878f ;
+    -fx-focus-color: #efefef;
+    -fx-faint-focus-color: #efefef22;
+    
+    -fx-focused-mark-color : -fx-focused-text-base-color ;
+    
+
+}
+
+.rounded-shadow {
+    -fx-background-radius: 10px;
+    -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.4) , 10, 0, 0, 2 );
+}
+
+.rounded-sin {
+    -fx-background-radius: 10px;
+}
+
+.rounded-top1 {
+    -fx-background-radius: 10px 10px 0 0px;
+}
+
+.rounded-bot1 {
+    -fx-background-radius: 0 0 10px 10px;
+}
+
+.rounded-top {
+    -fx-background-radius: 0 10px 10px 0;
+}
+
+.rounded-a{
+    -fx-background-radius: 10px 0 0 10px;
+}
+
+.rounded-b{
+    -fx-background-radius: 0 10px 10px 0px;
+}
+
+* {
+	-fx-primary-color: #007acc;
+	-fx-secondary-color: #4B6EAF;
+	-fx-light-grey-color: #d1d1d1;
+    
+	-fx-focus-color: -fx-secondary-color;
+}
+
+.date-picker .arrow-button {
+	-fx-background-color: -fx-primary-color;
+	-fx-background-radius: 0;
+}
+.date-picker .arrow-button:hover {
+	-fx-background-color: -fx-secondary-color;
+}
+.date-picker .arrow-button .arrow {
+	-fx-background-color: white;
+}
+.date-picker .cell {
+	-fx-background-color: white;
+}
+.date-picker .cell:hover {
+	-fx-background-color: -fx-light-grey-color;
+}
+.date-picker .cell:focused {
+	-fx-background-color: -fx-light-grey-color;
+}
+.date-picker .selected {
+	-fx-background-color: -fx-primary-color;
+	-fx-text-fill: white;
+}
+.date-picker .selected:focused {
+	-fx-background-color: -fx-primary-color;
+	-fx-text-fill: white;
+}
+.date-picker-popup  {
+	-fx-border-color: transparent;
+}
+.date-picker-popup .month-year-pane {
+	-fx-background-color: -fx-primary-color;
+}
+.date-picker-popup .month-year-pane .label {
+	-fx-text-fill: white;
+}
+.date-picker-popup .week-number-cell {
+	-fx-text-fill: -fx-secondary-color;
+}
+.date-picker-popup .spinner .button .left-arrow,
+.date-picker-popup .spinner .button .right-arrow {
+	-fx-background-color: white;
+}
+
+
+.text-input:focused {
+    -fx-highlight-text-fill: ladder(
+        -fx-highlight-fill,
+        -fx-light-text-color 45%,
+        -fx-dark-text-color  46%,
+        -fx-dark-text-color  59%,
+        -fx-mid-text-color   60%
+    );
+}
+ .button {
+    -fx-background-color: #85cc9c;
+        -fx-text-fill: white;
+        -fx-font-family:Arial;
+        -fx-font-weight:bold;
+        -fx-font-size: 14px;
+       
+        -fx-border-radius: 4px;
+        -fx-background-radius: 4px;
+        -fx-background-insets: 0;
+        -fx-border-color: transparent;
+        -fx-cursor: hand;
+  
+}
+
+.button:hover {
+-fx-background-color: #5d917d;
+        -fx-text-fill: white;
+        -fx-font-family:Arial;
+        -fx-font-weight:bold;
+        -fx-font-size: 14px;
+       
+        -fx-border-radius: 4px;
+        -fx-background-radius: 4px;
+        -fx-background-insets: 0;
+        -fx-border-color: transparent;
+        -fx-cursor: hand;
+}
+.button:disabled {
+     -fx-background-color: transparent;
+        -fx-border-color: #5d917d;
+        -fx-text-fill: #5d917d;
+        -fx-border-width: 3px;
+        -fx-opacity: 0.5;
+        -fx-cursor: default;
+}
+    
+.label_title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #11091a;
+   
+    
+}
+#button_cancelar {
+    -fx-background-color: transparent;
+    -fx-background-radius: 50%;
+    -fx-min-width: 60px;
+    -fx-min-height: 60px;
+    -fx-max-width: 60px;
+    -fx-max-height: 60px;
+}
+
+
+#button_cancelar.image-view {
+    -fx-opacity: 1.0;
+    -fx-transition-property: opacity;
+    -fx-transition-duration: 0.3s;
+}
+
+#button_cancelar:hover .image-view {
+    -fx-opacity: 0.7;
+    -fx-cursor: hand;
+}
+

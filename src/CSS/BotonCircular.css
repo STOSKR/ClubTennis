@@ -1,0 +1,20 @@
+.circular-button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 50%;
+    -fx-min-width: 60px;
+    -fx-min-height: 60px;
+    -fx-max-width: 60px;
+    -fx-max-height: 60px;
+}
+
+
+.circular-button .image-view {
+    -fx-opacity: 1.0;
+    -fx-transition-property: opacity;
+    -fx-transition-duration: 0.3s;
+}
+
+.circular-button:hover .image-view {
+    -fx-opacity: 0.7;
+    -fx-cursor: hand;
+}

@@ -1,0 +1,62 @@
+.root {
+    -fx-background-image: url("fondo.jpg");
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+    -fx-width: 100%;
+
+    -fx-base: #4CAF50;
+    -fx-default-button: #7f878f ;
+    -fx-focus-color: #efefef;
+    -fx-faint-focus-color: #efefef22;
+    
+    -fx-focused-mark-color : -fx-focused-text-base-color ;
+    
+
+}
+ .button {
+    -fx-background-color: #85cc9c;
+        -fx-text-fill: white;
+        -fx-font-family:Arial;
+        -fx-font-weight:bold;
+        -fx-font-size: 14px;
+       
+        -fx-border-radius: 4px;
+        -fx-background-radius: 4px;
+        -fx-background-insets: 0;
+        -fx-border-color: transparent;
+        -fx-cursor: hand;
+  
+}
+
+.button:hover {
+-fx-background-color: #5d917d;
+        -fx-text-fill: white;
+        -fx-font-family:Arial;
+        -fx-font-weight:bold;
+        -fx-font-size: 14px;
+       
+        -fx-border-radius: 4px;
+        -fx-background-radius: 4px;
+        -fx-background-insets: 0;
+        -fx-border-color: transparent;
+        -fx-cursor: hand;
+}
+.button:disabled {
+     -fx-background-color: transparent;
+        -fx-border-color: #5d917d;
+        -fx-text-fill: #5d917d;
+        -fx-border-width: 3px;
+        -fx-opacity: 0.5;
+        -fx-cursor: default;
+}
+    
+.label_title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+   
+    
+}
+    
+    
